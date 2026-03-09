@@ -71,7 +71,7 @@ Saved model checkpoints are stored in the `checkpoints/` directory.
 - L1 regularization: 0.00001
 - L2 regularization: 0.0
 - Early stopping: triggered at epoch 17
-- Best validation loss: 0.0634
+- Best validation loss: 0.0618
 - Final test accuracy: 0.9821
 
 ## Notes
