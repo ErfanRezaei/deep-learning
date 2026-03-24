@@ -4,6 +4,12 @@ __pycache__/
 .venv/
 venv/
 
+HW1b/data/
+HW1b/checkpoints/
+
+HW1b/results/logs/
+HW1b/results/tables/
+
 .DS_Store
 Thumbs.db
 .vscode/
