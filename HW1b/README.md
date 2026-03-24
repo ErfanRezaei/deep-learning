@@ -1,4 +1,4 @@
-# HW1b - Deep Learning
+# HW1b - Transfer learning and knowledge distillation
 
 This folder contains the implementation of the second deep learning homework, which focuses on **Transfer Learning** and **Knowledge Distillation** on the **CIFAR-10** dataset.
 
