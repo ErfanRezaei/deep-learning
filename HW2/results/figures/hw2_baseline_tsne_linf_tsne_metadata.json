@@ -1,0 +1,23 @@
+{
+  "num_clean_samples": 96,
+  "num_adversarial_samples": 96,
+  "num_total_points": 192,
+  "feature_layer": "layer4",
+  "tsne_perplexity": 20.0,
+  "figure_path": "results\\figures\\hw2_baseline_tsne_linf_tsne.png",
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "num_label_changes": 66,
+  "num_clean_correct": 49,
+  "num_adv_correct": 0
+}

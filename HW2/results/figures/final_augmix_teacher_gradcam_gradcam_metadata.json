@@ -1,0 +1,25 @@
+{
+  "num_requested_examples": 2,
+  "num_found_examples": 2,
+  "target_layer": "layer4",
+  "saved_figures": [
+    "results\\figures\\final_augmix_teacher_gradcam_sample01.png",
+    "results\\figures\\final_augmix_teacher_gradcam_sample02.png"
+  ],
+  "examples": [
+    {
+      "sample_index": 1,
+      "true_label": "truck",
+      "clean_prediction": "truck",
+      "adversarial_prediction": "automobile",
+      "figure_path": "results\\figures\\final_augmix_teacher_gradcam_sample01.png"
+    },
+    {
+      "sample_index": 2,
+      "true_label": "frog",
+      "clean_prediction": "frog",
+      "adversarial_prediction": "deer",
+      "figure_path": "results\\figures\\final_augmix_teacher_gradcam_sample02.png"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "num_clean_samples": 128,
+  "num_adversarial_samples": 128,
+  "num_total_points": 256,
+  "feature_layer": "layer4",
+  "tsne_perplexity": 20.0,
+  "figure_path": "results\\figures\\final_augmix_teacher_tsne_tsne.png",
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "num_label_changes": 91,
+  "num_clean_correct": 74,
+  "num_adv_correct": 1
+}
