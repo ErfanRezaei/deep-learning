@@ -63,19 +63,6 @@ FLOPs:
 
 `python compute_flops.py`
 
-## Notes
 
-All experiments were conducted under CPU-only constraints with limited training samples and moderate epoch counts. Therefore, the results should be interpreted as a fair comparison under restricted resources.
 
-## Report
 
-The report includes:
-- clean and corrupted evaluation
-- adversarial robustness analysis
-- Grad-CAM and t-SNE visualizations
-- knowledge distillation results
-- transferability analysis
-
-## Repository Link
-
-Add your correct HW2 GitHub link here.
