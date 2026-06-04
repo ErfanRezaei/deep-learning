@@ -239,7 +239,3 @@ drops sharply once `σ² < 0.137` (where capacity exceeds 12 bits) and reaches
 the relay gives a modest reliability gain. All claims are stated cautiously in
 `results/PART2_SUMMARY.md`.
 
-## Not implemented yet
-
-- Part 2 report section / integration into `report.tex` (the experiments and
-  analysis are done; only the write-up remains).
