@@ -1,33 +1,48 @@
 # CS515 Deep Learning — Homework 4
 
-Sequence modeling. **Part 1 (Financial Forecasting)** is complete and
-report-ready; **Part 2 (the communication-protocol bonus)** has a working
-end-to-end baseline.
+**Author:** Erfan Rezaei &nbsp;|&nbsp; **Student ID:** 00038556
+**Repository:** <https://github.com/ErfanRezaei/deep-learning/tree/main/HW4>
+
+Sequence modeling. Both parts are complete: **Part 1 (Financial Forecasting)**
+with LSTM/GRU, and **Part 2 (the communication-protocol bonus)**, a finished
+end-to-end transformer experiment with an SNR sweep and feedback ablation.
+
+This repository contains the reproducible **code**, lightweight **result
+summaries/plots**, and the instructions below. The written report
+(`report.tex` / `report.pdf`) is **submitted separately and is not part of
+this repository** (it is git-ignored); see the note at the end of the layout.
 
 ## Repository layout
 
 ```
-CS515-HW4/
+HW4/
 ├── part1_financial_forecasting/
 │   ├── data_download.py   # download daily OHLC data via yfinance
 │   ├── dataset.py         # sliding windows + chronological split + normalization
-│   ├── models.py          # StockLSTM / StockGRU
+│   ├── models.py          # StockLSTM / StockGRU + bidirectional classifier
 │   ├── train.py           # MSE training loop (AdamW), checkpoint + logs
 │   ├── evaluate.py        # train/val/test metrics, CSV + training-curve plot
 │   ├── compare.py         # exact vs rolling-average comparison artifacts
 │   ├── turning_point.py   # Part 1d: bidirectional buy/pass detector
-│   └── results/           # logs, metrics, checkpoints, plots
+│   ├── summarize.py       # aggregate metrics -> PART1_SUMMARY.md
+│   └── results/           # metrics (json/csv), plots, PART1_SUMMARY.md
 ├── part2_communication_bonus/
 │   ├── model.py           # transformer TX encoder + AWGN channel + RX decoder
 │   ├── train.py           # end-to-end training (cross-entropy over symbols)
 │   ├── evaluate.py        # SER / BLER / per-position acc / power check
 │   ├── sweep.py           # supplementary SNR sweep + feedback ablation
 │   ├── summarize.py       # aggregate metrics -> PART2_SUMMARY.md
-│   └── results/           # logs, metrics, checkpoints, plots
-├── report.tex / report.pdf  # Part 1 report
+│   └── results/           # metrics (json/csv), plots, PART2_SUMMARY.md
 ├── requirements.txt
 └── README.md
 ```
+
+**Not in this repository (git-ignored, regenerated locally):**
+
+- `report.tex`, `report.pdf` — the written report (submitted separately).
+- `*.pt` — model checkpoints (produced by running the training scripts).
+- `part1_financial_forecasting/data/` — downloaded raw OHLC CSVs
+  (re-fetch with `data_download.py`).
 
 ## Part 1 — current implementation
 
@@ -170,23 +185,32 @@ Turning-point detection (`turning_point.py`, tag `turning_<rnn>`):
   matrix, and true/pred buy-rate on all splits (plus the gamma used).
 - `turning_<rnn>_curve.png` — training/validation BCE curve.
 
-## Final summary and report
+## Result summaries and report
 
-After running the experiments above, aggregate everything and build the report:
+Aggregate each part's metrics into a Markdown summary (these summaries are
+committed to the repository):
 
 ```bash
-# from part1_financial_forecasting/  -> results/PART1_SUMMARY.md
+# Part 1: from part1_financial_forecasting/  -> results/PART1_SUMMARY.md
 python summarize.py
+# Part 2: from part2_communication_bonus/    -> results/PART2_SUMMARY.md
+python summarize.py
+```
 
-# from the repo root CS515-HW4/  -> report.pdf
+- `results/PART1_SUMMARY.md`, `results/PART2_SUMMARY.md` — single Markdown
+  summaries of every metric/table, auto-generated from the JSON artifacts
+  (the source of truth for the report). All reported numbers are produced by
+  the code; none are hand-entered.
+
+The written report (`report.tex` → `report.pdf`) covers **both** parts but is
+submitted separately and is **not** included in this repository. If you have
+the local `report.tex`, rebuild the PDF from the `HW4/` folder with:
+
+```bash
 latexmk -pdf report.tex
 ```
 
-- `results/PART1_SUMMARY.md` — single Markdown summary of every metric/table,
-  auto-generated from the JSON artifacts (source of truth for the report).
-- `report.tex` / `report.pdf` — the Part 1 academic report.
-
-# Part 2 — Communication protocol (bonus): baseline
+# Part 2 — Communication protocol (bonus)
 
 An interactive two-node system where a transformer **TX encoder** and **RX
 decoder** are trained end-to-end to communicate a message `m ∈ {1..8}^4`
@@ -227,15 +251,19 @@ Outputs (tagged, default `comm`): `<tag>_best.pt`, `<tag>_train_log.json`,
 `<tag>_curve.png`, `<tag>_metrics.json`, `<tag>_per_position.png`. The metrics
 JSON also records the measured per-round power and the capacity reference.
 
-**Baseline result.** At the required `σ²=0.25` the system reaches
-**SER ≈ 0.28** (symbol accuracy ≈ 0.72, BLER ≈ 0.73), with measured per-round
-power ≈ 1.0 (constraint satisfied). This regime is **capacity-limited, not a
-bug**: with per-round power 1 split over 4 symbols the SNR is 0 dB/use, so the
-16 channel uses carry ≈ 8 bits while the message is 12 bits — and since
-feedback does not increase AWGN capacity, error-free transmission is not
-achievable here (Fano floor BLER ≳ 0.25). The SNR sweep confirms this: SER
-drops sharply once `σ² < 0.137` (where capacity exceeds 12 bits) and reaches
-≈ 0 at high SNR, validating the implementation. The feedback ablation shows
-the relay gives a modest reliability gain. All claims are stated cautiously in
-`results/PART2_SUMMARY.md`.
+**Result.** At the required `σ²=0.25` the system reaches **SER ≈ 0.28**
+(symbol accuracy ≈ 0.72, BLER ≈ 0.73), with measured per-round power ≈ 1.0
+(constraint satisfied). This regime is **capacity-limited, not a bug**: with
+per-round power 1 split over 4 symbols the SNR is 0 dB/use, so the 16 channel
+uses carry ≈ 8 bits while the message is 12 bits — and since feedback does not
+increase AWGN capacity, error-free transmission is not achievable here (Fano
+floor BLER ≳ 0.25). The SNR sweep confirms this: SER drops sharply once
+`σ² < 0.137` (where capacity exceeds 12 bits) and reaches ≈ 0 at high SNR,
+validating the implementation.
 
+The **feedback ablation** shows the noiseless relay gives **no meaningful gain
+in the capacity-limited regime** (`σ²=0.25`: SER ≈ 0.28 with and without
+feedback) but a **large gain in the operational regime** (`σ²=0.10`:
+SER ≈ 0.009 with feedback vs ≈ 0.059 without, ~6× lower) — consistent with
+feedback improving reliability rather than capacity. All claims are stated
+cautiously in `results/PART2_SUMMARY.md`.
