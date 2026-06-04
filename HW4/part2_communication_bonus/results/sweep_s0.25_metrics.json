@@ -1,0 +1,21 @@
+{
+  "T": 4,
+  "sigma2": 0.25,
+  "alphabet": 8,
+  "n_symbols": 4,
+  "use_feedback": true,
+  "n_messages": 100000,
+  "ser": 0.2835925,
+  "symbol_accuracy": 0.7164075,
+  "bler": 0.73785,
+  "per_position_accuracy": [
+    0.7182299999999999,
+    0.7154400000000001,
+    0.7148300000000001,
+    0.71713
+  ],
+  "mean_round_power": 0.9999999701976776,
+  "capacity_bits": 8.0,
+  "message_entropy_bits": 12.0,
+  "fano_bler_lower_bound": 0.2500073390377652
+}

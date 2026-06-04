@@ -1,0 +1,16 @@
+{
+  "T": 4,
+  "sigma2": 0.01,
+  "alphabet": 8,
+  "n_symbols": 4,
+  "n_messages": 200000,
+  "ser": 7.5e-06,
+  "symbol_accuracy": 0.9999925,
+  "bler": 3e-05,
+  "per_position_accuracy": [
+    1.0,
+    0.99999,
+    0.99999,
+    0.99999
+  ]
+}
